@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streaming Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="modal.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <button class="menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <a href="index.html">
+                    <img src="https://raw.githubusercontent.com/streamhub/assets/main/logo.png" alt="" class="logo-img">
+                    <span class="logo-text">StreamHub</span>
+                </a>
+            </div>
+            <div class="nav-links" id="mobileMenu">
+                <button class="close-menu" onclick="toggleMobileMenu()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="nav-group primary">
+                    <a href="index.html" class="active" data-page="home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                    <a href="browse.html" data-page="browse">
+                        <i class="fas fa-compass"></i>
+                        <span>Browse</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                    <a href="mylist.html" data-page="mylist">
+                        <i class="fas fa-list"></i>
+                        <span>My List</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                    <a href="trending.html" data-page="trending">
+                        <i class="fas fa-fire"></i>
+                        <span>Trending</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button class="cast-btn"><i class="fas fa-cast"></i></button>
+                <button class="search-btn" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
+                <div class="profile-container">
+                    <button class="profile-btn" onclick="toggleProfile()"><i class="fas fa-user"></i></button>
+                    <div class="profile-dropdown">
+                        <div class="profile-header">
+                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=random" alt="Profile" class="profile-avatar">
+                            <span>John Doe</span>
+                        </div>
+                        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" onclick="showLoginModal()"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-content">
+            <div class="search-header">
+                <input type="text" id="searchInput" placeholder="Search for movies, shows, genres..." oninput="handleSearch(event)">
+                <button onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="search-results" id="searchResults">
+                <!-- Search results will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section class="trending">
+            <h2>Most Watchlisted This Week</h2>
+            <div class="content-slider">
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/deadpool-wolverine.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/yxQy1YZVBhD8yRYvBZg7XhWHSPa.jpg" alt="Deadpool & Wolverine">
+                    <div class="card-info">
+                        <h3>Deadpool & Wolverine</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/beetlejuice-2.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/jLLtx3nTRSLGPAKl4RoIv1FbEBr.jpg" alt="Beetlejuice Beetlejuice">
+                    <div class="card-info">
+                        <h3>Beetlejuice Beetlejuice</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/moana-2.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/qhb1qOilapbapxWQn9jtRCMwXJF.jpg" alt="Moana 2">
+                    <div class="card-info">
+                        <h3>Moana 2</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/kingdom-apes.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/8tBhAn6qVRQzf5yvEcxjgPMgTkw.jpg" alt="Kingdom of the Planet of the Apes">
+                    <div class="card-info">
+                        <h3>Kingdom of the Planet of the Apes</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/godzilla-x-kong.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg" alt="Godzilla x Kong">
+                    <div class="card-info">
+                        <h3>Godzilla x Kong: The New Empire</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/inside-out-2.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/kUZ0sDpn2U7K4VhxqShQ3GHxzj6.jpg" alt="Inside Out 2">
+                    <div class="card-info">
+                        <h3>Inside Out 2</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/fall-guy.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/gg4zZoTggZmpAQ32qXEL6CoFOiI.jpg" alt="The Fall Guy">
+                    <div class="card-info">
+                        <h3>The Fall Guy</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/furiosa.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/xbxpvb6El3wE8j8OewoZn3qjyPl.jpg" alt="Furiosa">
+                    <div class="card-info">
+                        <h3>Furiosa: A Mad Max Saga</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/bad-boys-4.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/lZ2sOCMCcGaPppaXj0Wiv0S7A08.jpg" alt="Bad Boys 4">
+                    <div class="card-info">
+                        <h3>Bad Boys 4</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/despicable-me-4.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/vdpE5pjJVql5aD6pnzRqlFmgxXf.jpg" alt="Despicable Me 4">
+                    <div class="card-info">
+                        <h3>Despicable Me 4</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services">
+            <h2>Your Selected Services</h2>
+            <div class="service-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Amazon_Prime_Video_logo.svg/2560px-Amazon_Prime_Video_logo.svg.png" 
+                     alt="Prime Video" 
+                     title="Watch on Prime Video">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png" 
+                     alt="Netflix" 
+                     title="Watch on Netflix">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/2048px-Telegram_logo.svg.png"
+                     alt="Telegram"
+                     title="Join our Telegram Channel"
+                     class="telegram-icon">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_(2019).png/1200px-Facebook_Logo_(2019).png"
+                     alt="Facebook"
+                     title="Follow us on Facebook">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png"
+                     alt="Instagram"
+                     title="Follow us on Instagram">
+            </div>
+        </section>
+
+        <section class="recommendations">
+            <h2>Recommended On Your Services</h2>
+            <div class="content-slider">
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/last-of-us.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/NNxYkU70HPurnNCSiCjYAmacwm.jpg" alt="The Last of Us">
+                    <div class="card-info">
+                        <h3>The Last of Us</h3>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/succession.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/mBaXZ95R2OxueZhvQbcEWy2DqyO.jpg" alt="Succession">
+                    <div class="card-info">
+                        <h3>Succession</h3>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/gran-turismo.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/qW4crfED8mpNDadSmMdi7ZDzhXF.jpg" alt="Gran Turismo">
+                    <div class="card-info">
+                        <h3>Gran Turismo</h3>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/barbie.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/7dFZJ2ZJJdcmkp05B9NWlqTJ5tq.jpg" alt="Barbie">
+                    <div class="card-info">
+                        <h3>Barbie</h3>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/house-of-dragon.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/fiVW06jE7z9YnO4trhaMEdclSiC.jpg" alt="House of the Dragon">
+                    <div class="card-info">
+                        <h3>House of the Dragon</h3>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/wednesday.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/9PqD3wSIjntyJDBzMNuxuKHwpUD.jpg" alt="Wednesday">
+                    <div class="card-info">
+                        <h3>Wednesday</h3>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/the-bear.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/xZUZ9i6vVayjyhR1vRo9Bjku4h.jpg" alt="The Bear">
+                    <div class="card-info">
+                        <h3>The Bear</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="recommended">
+            <h2>Recommended For You</h2>
+            <div class="content-slider">
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/kingdom-apes.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/8tBhAn6qVRQzf5yvEcxjgPMgTkw.jpg" alt="Kingdom of the Planet of the Apes">
+                    <div class="card-info">
+                        <h3>Kingdom of the Planet of the Apes</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/godzilla-x-kong.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg" alt="Godzilla x Kong">
+                    <div class="card-info">
+                        <h3>Godzilla x Kong: The New Empire</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/inside-out-2.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/kUZ0sDpn2U7K4VhxqShQ3GHxzj6.jpg" alt="Inside Out 2">
+                    <div class="card-info">
+                        <h3>Inside Out 2</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/fall-guy.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/gg4zZoTggZmpAQ32qXEL6CoFOiI.jpg" alt="The Fall Guy">
+                    <div class="card-info">
+                        <h3>The Fall Guy</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/furiosa.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/xbxpvb6El3wE8j8OewoZn3qjyPl.jpg" alt="Furiosa">
+                    <div class="card-info">
+                        <h3>Furiosa: A Mad Max Saga</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/beetlejuice-2.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/jLLtx3nTRSLGPAKl4RoIv1FbEBr.jpg" alt="Beetlejuice Beetlejuice">
+                    <div class="card-info">
+                        <h3>Beetlejuice Beetlejuice</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/bad-boys-4.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/lZ2sOCMCcGaPppaXj0Wiv0S7A08.jpg" alt="Bad Boys 4">
+                    <div class="card-info">
+                        <h3>Bad Boys 4</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+                <div class="content-card" style="cursor: pointer;" onclick="window.location.href='movies/despicable-me-4.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/vdpE5pjJVql5aD6pnzRqlFmgxXf.jpg" alt="Despicable Me 4">
+                    <div class="card-info">
+                        <h3>Despicable Me 4</h3>
+                        <p>2024</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Get to Know Us</h3>
+                <ul>
+                    <li><a href="#">About StreamHub</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Releases</a></li>
+                    <li><a href="#">StreamHub Science</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect with Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Make Money with Us</h3>
+                <ul>
+                    <li><a href="#">Sell on StreamHub</a></li>
+                    <li><a href="#">Become an Affiliate</a></li>
+                    <li><a href="#">Advertise Your Content</a></li>
+                    <li><a href="#">Self-Publish with Us</a></li>
+                    <li><a href="#">Host your Streaming Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Let Us Help You</h3>
+                <ul>
+                    <li><a href="#">Your Account</a></li>
+                    <li><a href="#">Returns Centre</a></li>
+                    <li><a href="#">Streaming Help</a></li>
+                    <li><a href="#">App Download</a></li>
+                    <li><a href="#">Help Center</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="https://raw.githubusercontent.com/streamhub/assets/main/logo.png" alt="" class="logo-img">
+                <span class="logo-text">StreamHub</span>
+            </div>
+            <div class="footer-meta">
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                    </select>
+                </div>
+                <div class="region-selector">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <select>
+                        <option value="us">United States</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="ca">Canada</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-legal">
+            <div class="legal-links">
+                <a href="#">Conditions of Use</a>
+                <a href="#">Privacy Notice</a>
+                <a href="#">Interest-Based Ads</a>
+                <a href="#">Cookie Preferences</a>
+            </div>
+            <div class="copyright">
+                © 2024 StreamHub.com, Inc. or its affiliates
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html> 

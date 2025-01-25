@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My List - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="modal.css">
+    <style>
+        .mylist-header {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mylist-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+        }
+
+        .mylist-header i {
+            color: #e50914;
+        }
+
+        .mylist-controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .sort-button {
+            background: #111;
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .sort-button:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        .mylist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            padding: 0 2rem 2rem;
+        }
+
+        .mylist-card {
+            position: relative;
+        }
+
+        .remove-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .mylist-card:hover .remove-button {
+            opacity: 1;
+        }
+
+        .remove-button:hover {
+            background: #e50914;
+            transform: scale(1.1);
+        }
+
+        .empty-list {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .empty-list i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .browse-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #e50914;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .browse-button:hover {
+            background: #f6121d;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .mylist-header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .mylist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 1rem;
+                padding: 0 1rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Same header as index.html -->
+    <main>
+        <section class="mylist-header">
+            <h2><i class="fas fa-list"></i> My List</h2>
+            <div class="mylist-controls">
+                <button class="sort-button" onclick="sortByName()">
+                    <i class="fas fa-sort-alpha-down"></i> Name
+                </button>
+                <button class="sort-button" onclick="sortByDate()">
+                    <i class="fas fa-calendar"></i> Date Added
+                </button>
+            </div>
+        </section>
+
+        <div class="mylist-grid">
+            <!-- Example saved content -->
+            <div class="mylist-card content-card">
+                <img src="https://image.tmdb.org/t/p/w500/NNxYkU70HPurnNCSiCjYAmacwm.jpg" alt="The Last of Us">
+                <button class="remove-button" onclick="removeFromList(this)">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="card-info">
+                    <h3>The Last of Us</h3>
+                </div>
+            </div>
+
+            <div class="mylist-card content-card">
+                <img src="https://image.tmdb.org/t/p/w500/mBaXZ95R2OxueZhvQbcEWy2DqyO.jpg" alt="Succession">
+                <button class="remove-button" onclick="removeFromList(this)">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="card-info">
+                    <h3>Succession</h3>
+                </div>
+            </div>
+
+            <!-- Empty state (shown when no items in list) -->
+            <div class="empty-list" style="display: none;">
+                <i class="fas fa-folder-open"></i>
+                <h3>Your list is empty</h3>
+                <p>Add shows and movies to your list to watch them later</p>
+                <a href="browse.html" class="browse-button">
+                    <i class="fas fa-compass"></i> Browse Content
+                </a>
+            </div>
+        </div>
+    </main>
+    <!-- Same footer as index.html -->
+
+    <script src="app.js"></script>
+    <script>
+        function removeFromList(button) {
+            const card = button.closest('.mylist-card');
+            card.style.animation = 'fadeOut 0.3s ease';
+            setTimeout(() => {
+                card.remove();
+                checkEmptyState();
+            }, 300);
+        }
+
+        function checkEmptyState() {
+            const cards = document.querySelectorAll('.mylist-card');
+            const emptyState = document.querySelector('.empty-list');
+            if (cards.length === 0) {
+                emptyState.style.display = 'block';
+            }
+        }
+
+        function sortByName() {
+            const grid = document.querySelector('.mylist-grid');
+            const cards = Array.from(grid.querySelectorAll('.mylist-card'));
+            cards.sort((a, b) => {
+                const titleA = a.querySelector('h3').textContent;
+                const titleB = b.querySelector('h3').textContent;
+                return titleA.localeCompare(titleB);
+            });
+            cards.forEach(card => grid.appendChild(card));
+        }
+
+        function sortByDate() {
+            // In a real app, you would sort based on saved dates
+            // For now, we'll just reverse the current order
+            const grid = document.querySelector('.mylist-grid');
+            const cards = Array.from(grid.querySelectorAll('.mylist-card'));
+            cards.reverse();
+            cards.forEach(card => grid.appendChild(card));
+        }
+    </script>
+</body>
+</html> 

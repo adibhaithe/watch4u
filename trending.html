@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="modal.css">
+    <style>
+        .trending-header {
+            padding: 2rem;
+            background: linear-gradient(to bottom, #111, transparent);
+        }
+
+        .trending-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+            color: #fff;
+        }
+
+        .trending-header i {
+            color: #e50914;
+        }
+
+        .trending-filters {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .filter-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-button.active {
+            background: #e50914;
+        }
+
+        .filter-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+        }
+
+        .trending-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #111;
+        }
+
+        .trending-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .trending-rank {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(229, 9, 20, 0.9);
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .trending-info {
+            padding: 1rem;
+        }
+
+        .trending-title {
+            margin: 0;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .trending-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .trending-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .stat i {
+            color: #e50914;
+        }
+
+        @media (max-width: 768px) {
+            .trending-header {
+                padding: 1rem;
+            }
+
+            .trending-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .trending-filters {
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+
+            .filter-button {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Same header as index.html -->
+    <main>
+        <section class="trending-header">
+            <h2><i class="fas fa-fire"></i> Trending Now</h2>
+            <div class="trending-filters">
+                <button class="filter-button active" data-filter="all">All</button>
+                <button class="filter-button" data-filter="movies">Movies</button>
+                <button class="filter-button" data-filter="shows">TV Shows</button>
+                <button class="filter-button" data-filter="week">This Week</button>
+                <button class="filter-button" data-filter="day">Today</button>
+            </div>
+        </section>
+
+        <div class="trending-grid" id="trendingGrid">
+            <!-- Content will be loaded dynamically -->
+        </div>
+    </main>
+    <!-- Same footer as index.html -->
+
+    <script src="app.js"></script>
+    <script>
+        // Trending data fetcher
+        async function fetchTrendingData() {
+            try {
+                // Using Google Trends API endpoint (you'll need to set this up)
+                const response = await fetch('https://trends.google.com/trends/api/dailytrends?geo=US&cat=34');
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching trending data:', error);
+                return null;
+            }
+        }
+
+        // Create trending card
+        function createTrendingCard(item, index) {
+            return `
+                <div class="trending-card content-card" data-category="${item.category}">
+                    <div class="trending-rank">${index + 1}</div>
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="trending-info">
+                        <h3 class="trending-title">${item.title}</h3>
+                        <div class="trending-meta">
+                            <div class="trending-stats">
+                                <span class="stat">
+                                    <i class="fas fa-chart-line"></i>
+                                    ${item.trending_score}
+                                </span>
+                                <span class="stat">
+                                    <i class="fas fa-eye"></i>
+                                    ${item.views}
+                                </span>
+                            </div>
+                            <span>${item.year}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Filter handling
+        document.querySelectorAll('.filter-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active state
+                document.querySelectorAll('.filter-button').forEach(btn => 
+                    btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Apply filter
+                const filter = button.dataset.filter;
+                filterContent(filter);
+            });
+        });
+
+        function filterContent(filter) {
+            const cards = document.querySelectorAll('.trending-card');
+            cards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Initial load
+        window.addEventListener('DOMContentLoaded', async () => {
+            // For demo purposes, using sample data
+            const sampleData = [
+                {
+                    title: "The Last of Us",
+                    image: "https://image.tmdb.org/t/p/w500/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
+                    category: "shows",
+                    trending_score: "98%",
+                    views: "2.5M",
+                    year: "2023"
+                },
+                {
+                    title: "Succession",
+                    image: "https://image.tmdb.org/t/p/w500/mBaXZ95R2OxueZhvQbcEWy2DqyO.jpg",
+                    category: "shows",
+                    trending_score: "95%",
+                    views: "1.8M",
+                    year: "2023"
+                }
+                // Add more items as needed
+            ];
+
+            const grid = document.getElementById('trendingGrid');
+            sampleData.forEach((item, index) => {
+                grid.innerHTML += createTrendingCard(item, index);
+            });
+        });
+    </script>
+</body>
+</html> 

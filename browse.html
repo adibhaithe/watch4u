@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="modal.css">
+    <style>
+        .browse-categories {
+            padding: 2rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+
+        .category-card {
+            background: #111;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: #1a1a1a;
+        }
+
+        .category-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #e50914;
+        }
+
+        .category-card h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .category-content {
+            display: none;
+            padding: 2rem;
+        }
+
+        .category-content.active {
+            display: block;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .browse-categories {
+                padding: 1rem;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .category-card i {
+                font-size: 2rem;
+            }
+
+            .category-card h3 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Same header as index.html -->
+    <main>
+        <section class="browse-categories">
+            <h2>Categories</h2>
+            <div class="category-grid">
+                <a href="#action" class="category-card" data-category="action">
+                    <i class="fas fa-fire"></i>
+                    <h3>Action</h3>
+                </a>
+                <a href="#drama" class="category-card" data-category="drama">
+                    <i class="fas fa-masks-theater"></i>
+                    <h3>Drama</h3>
+                </a>
+                <a href="#comedy" class="category-card" data-category="comedy">
+                    <i class="fas fa-laugh"></i>
+                    <h3>Comedy</h3>
+                </a>
+                <a href="#horror" class="category-card" data-category="horror">
+                    <i class="fas fa-ghost"></i>
+                    <h3>Horror</h3>
+                </a>
+                <a href="#scifi" class="category-card" data-category="scifi">
+                    <i class="fas fa-robot"></i>
+                    <h3>Sci-Fi</h3>
+                </a>
+                <a href="#animation" class="category-card" data-category="animation">
+                    <i class="fas fa-child"></i>
+                    <h3>Animation</h3>
+                </a>
+            </div>
+        </section>
+
+        <section id="action" class="category-content">
+            <h2>Action Movies</h2>
+            <div class="content-slider">
+                <div class="content-card" onclick="window.location.href='movies/bad-boys-4.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/bCpWHhOTRxMpNmKkR4N3tcjbkUe.jpg" alt="Bad Boys 4">
+                    <div class="card-info">
+                        <h3>Bad Boys 4</h3>
+                    </div>
+                </div>
+                <div class="content-card" onclick="window.location.href='movies/beekeeper.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/A7EByudX0eOzlkQ2FIbogzyazm2.jpg" alt="The Beekeeper">
+                    <div class="card-info">
+                        <h3>The Beekeeper</h3>
+                    </div>
+                </div>
+                <div class="content-card" onclick="window.location.href='movies/gran-turismo.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/qW4crfED8mpNDadSmMdi7ZDzhXF.jpg" alt="Gran Turismo">
+                    <div class="card-info">
+                        <h3>Gran Turismo</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="drama" class="category-content">
+            <h2>Drama Series</h2>
+            <div class="content-slider">
+                <div class="content-card" onclick="window.location.href='movies/succession.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/mBaXZ95R2OxueZhvQbcEWy2DqyO.jpg" alt="Succession">
+                    <div class="card-info">
+                        <h3>Succession</h3>
+                    </div>
+                </div>
+                <div class="content-card" onclick="window.location.href='movies/last-of-us.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/NNxYkU70HPurnNCSiCjYAmacwm.jpg" alt="The Last of Us">
+                    <div class="card-info">
+                        <h3>The Last of Us</h3>
+                    </div>
+                </div>
+                <div class="content-card" onclick="window.location.href='movies/house-of-dragon.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/z2yahl2uefxDCl0nogcRBstwruJ.jpg" alt="House of the Dragon">
+                    <div class="card-info">
+                        <h3>House of the Dragon</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comedy" class="category-content">
+            <h2>Comedy</h2>
+            <div class="content-slider">
+                <div class="content-card" onclick="window.location.href='movies/barbie.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/7dFZJ2ZJJdcmkp05B9NWlqTJ5tq.jpg" alt="Barbie">
+                    <div class="card-info">
+                        <h3>Barbie</h3>
+                    </div>
+                </div>
+                <!-- Add more comedy movies -->
+            </div>
+        </section>
+
+        <section id="horror" class="category-content">
+            <h2>Horror</h2>
+            <div class="content-slider">
+                <div class="content-card" onclick="window.location.href='movies/insidious.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/vStL9CXh0jQXEXn5DShZGxjvynI.jpg" alt="Insidious">
+                    <div class="card-info">
+                        <h3>Insidious: The Red Door</h3>
+                    </div>
+                </div>
+                <!-- Add more horror movies -->
+            </div>
+        </section>
+
+        <section id="scifi" class="category-content">
+            <h2>Sci-Fi</h2>
+            <div class="content-slider">
+                <div class="content-card" onclick="window.location.href='movies/godzilla.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/qmdjfv1s9CP3NaYGdHV9OLNZKr1.jpg" alt="Godzilla x Kong">
+                    <div class="card-info">
+                        <h3>Godzilla x Kong</h3>
+                    </div>
+                </div>
+                <!-- Add more sci-fi movies -->
+            </div>
+        </section>
+
+        <section id="animation" class="category-content">
+            <h2>Animation</h2>
+            <div class="content-slider">
+                <div class="content-card" onclick="window.location.href='movies/kung-fu-panda.html'">
+                    <img src="https://image.tmdb.org/t/p/w500/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg" alt="Kung Fu Panda 4">
+                    <div class="card-info">
+                        <h3>Kung Fu Panda 4</h3>
+                    </div>
+                </div>
+                <!-- Add more animated movies -->
+            </div>
+        </section>
+    </main>
+    <!-- Same footer as index.html -->
+
+    <script src="app.js"></script>
+    <script>
+        // Handle category navigation
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = card.getAttribute('data-category');
+                document.querySelectorAll('.category-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(category).classList.add('active');
+                document.getElementById(category).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html> 
